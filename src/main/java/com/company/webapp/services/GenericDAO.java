@@ -10,18 +10,34 @@ import com.company.webapp.model.Product;
 
 public class GenericDAO<Entity> {
 	
-
-
-	
-	private final Class<Entity> entity = null;
-	
 	private static EntityManager em = ConnectionFactory.getEntityManager();
-
+	private Class<Entity> entity;	
 	
-	public void findById(Entity entity, int id){
+	
+	// Constructor
+	//Get the static Class of the DAO who extends this Generic class, for use in methods that have return, and use the static class
+	public GenericDAO(Class<Entity> e) {
+		this.entity = e;
+	}
+	
+	public Entity findById(long id){
+		Entity e = em.find(entity, id);
 		
-		System.out.println(entity.getClass());
-		//return em.find(entityClass, primaryKey);
+		if(e == null) {
+			throw new NullPointerException("Cannot find the entity in the database");
+		}else {
+			return e;
+		}
+		
+	}
+	
+	public List<Entity> getAll(){
+		List<Entity> entities = null;
+		Query query = em.createQuery("SELECT e FROM " + entity.getSimpleName() + " e");
+		entities = query.getResultList();
+		
+		return entities;
+		
 	}
 	
 	public void save(Entity entity) {
@@ -30,9 +46,17 @@ public class GenericDAO<Entity> {
 		em.getTransaction().commit();
 	}
 	
+	public void remove(long id){
+		Entity e = findById(id);
+		
+		if(e != null) {
+			em.getTransaction().begin();
+			em.remove(e);
+			em.getTransaction().commit();
+		}else {
+			throw new NullPointerException("Cannot find the entity in the database");
+		}
+		
+	}
 	
-	
-	
-	
-
 }
