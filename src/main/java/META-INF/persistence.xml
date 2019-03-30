@@ -9,7 +9,7 @@
 		<class>com.company.restful_javaee.model.Product</class>
         <properties>
             <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />
-            <property name="javax.persistence.jdbc.url" value="jdbc:mysql://$HOSTNAME:3306/ecommerce?useTimezone=true&amp;serverTimezone=UTC" />
+            <property name="javax.persistence.jdbc.url" value="jdbc:mysql://$MYSQL_HOST:3306/ecommerce?useTimezone=true&amp;serverTimezone=UTC" />
             <property name="javax.persistence.jdbc.user" value="$MYSQL_USER" />
             <property name="javax.persistence.jdbc.password" value="$MYSQL_PASSWORD" />
 
